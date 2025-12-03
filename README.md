@@ -11,7 +11,8 @@ Interactive map included using **Folium**!
 
 ## Quick Look
 
-![Citi Bike Popular Stations Map](images/citi_bike_map_screenshot.png)
+![Citi Bike Popular Stations Map] <img width="882" height="660" alt="citi_bike_map_screenshot" src="https://github.com/user-attachments/assets/ec934838-81ca-4f37-a7c7-e0456c5339a9" />
+
 *Interactive map showing the most popular starting stations (circle size = number of trips)*
 
 ## Key Findings
@@ -24,3 +25,4 @@ Interactive map included using **Folium**!
 | **Trip Duration** | Short spikes throughout the day, longer recreational trips around midday |
 
 ## Project Structure
+
