@@ -1,0 +1,42 @@
+import pandas as pd
+import seaborn as sns
+df = pd.read_csv('https://raw.githubusercontent.com/mamaggie/TutorialProjects/main/data/citi_bike_trip_data.csv')
+df.head ()
+df.shape
+df.columns
+df.describe()
+sns.histplot(df['tripduration'])
+sns.pairplot(df)
+sns.pairplot(df[['tripduration', 'gender']])
+num_subscriber = df['usertype'].loc[df['usertype']=='Subscriber'].count()
+total =len(df)
+print(round(num_subscriber/total*100, 2), '% of total riders on October 1st, 2013 is annual subscribers')
+# Q1: how does the trip length vary based on the trip start time (time of day)
+df
+df.starttime.apply(lambda x:x[11:13]).astype('str')
+df['hour'] = df.starttime.apply(lambda x:x[11:13]).astype('str')
+df
+# Visualize correlation
+sns.scatterplot(x = 'hour', y = 'tripduration', data =df)
+sns.scatterplot(x = 'hour', y = 'tripduration', data = df, hue = 'usertype')
+# Q2: Which bike stations are the most popular? Where do most of the trip start from?
+df2 = df.groupby(['start station id']).size().reset_index(name = 'counts')
+df2
+temp = df.drop_duplicates('start station id')
+#left join
+df2 = pd.merge(df2, temp[['start station id', 'start station name', 'start station latitude',
+                    'start station longitude']], how = 'left', on = ['start station id'])
+%pip install folium
+import folium
+# initialize a map, need visuals
+m = folium.Map(location = [40.691966, -73.981302], tiles = 'OpenStreetMap', zoom_start = 12)
+m
+for i in range(0, len(df2)):
+    folium.Circle(
+        location = [df2.iloc[i]['start station latitude'], df.iloc[i]['start station longitude']],
+        popup = df2.iloc[i]['start station name'],
+        radius = float(df2.iloc[i]['counts'])/2,
+        color = 'green',
+        fill = True, fill_color = 'green' 
+    ).add_to(m)
+m
